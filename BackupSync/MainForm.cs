@@ -35,7 +35,8 @@ namespace BackupSync
             }
             catch (Exception e)
             {
-                MessageBox.Show("Се појави грешка при вчитување на листата на синхронизирани фајлови.\n" + e.Message, "Грешка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (File.Exists(Properties.Resources.SyncEntries))
+                    MessageBox.Show("Се појави грешка при вчитување на листата на синхронизирани фајлови.\n" + e.Message, "Грешка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 syncEntries = new List<SyncEntry>();
             }
         }
