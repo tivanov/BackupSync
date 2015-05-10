@@ -15,7 +15,7 @@ namespace BackupSync
         /// <param name="source"> pateka na original.</param>   
         /// <param name="dest"> pateka na kopija.</param> 
         public static void Copy(string source, string dest)
-        {     
+        {//Treba da se izvrsuva vo poseben thread za da ne blokira pri pogolemi fajlovi ama nema vreme
                 if (System.IO.Directory.Exists(source))
                 {// ako e kreiran folder
                     DirectoryCopy(source, dest, true);
@@ -32,7 +32,7 @@ namespace BackupSync
         /// <param name="source"> pateka na original.</param>   
         /// <param name="dest"> pateka na kopija.</param> 
         public static void Move(string source, string dest)
-        {
+        {//Treba da se izvrsuva vo poseben thread za da ne blokira pri pogolemi fajlovi ama nema vreme
                 if (System.IO.Directory.Exists(source))
                     Directory.Move(source, dest);
                 else
@@ -40,7 +40,7 @@ namespace BackupSync
         }
 
         public static void Delete(string target)
-        {
+        {//Treba da se izvrsuva vo poseben thread za da ne blokira pri pogolemi fajlovi ama nema vreme
                 if (System.IO.Directory.Exists(target))
                     Directory.Delete(target, true);
                 else

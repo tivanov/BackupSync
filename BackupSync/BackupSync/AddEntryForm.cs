@@ -16,9 +16,10 @@ namespace BackupSync
         public SyncEntry NewEntry { get; set; }
         private MainForm parent;
 
-        public AddEntryForm()
+        public AddEntryForm(MainForm parent)
         {
             InitializeComponent();
+            this.parent = parent;
         }
         
 

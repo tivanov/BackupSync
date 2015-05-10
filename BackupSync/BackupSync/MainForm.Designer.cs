@@ -80,7 +80,6 @@
             this.trayIcon.Text = "BackupSync";
             this.trayIcon.Visible = true;
             this.trayIcon.DoubleClick += new System.EventHandler(this.trayIcon_DoubleClick);
-            this.trayIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.trayIcon_MouseDoubleClick);
             // 
             // trayMenu
             // 
@@ -108,7 +107,7 @@
             this.izlezToolStripMenuItem.Name = "izlezToolStripMenuItem";
             this.izlezToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.izlezToolStripMenuItem.Text = "Излез";
-            this.izlezToolStripMenuItem.Click += new System.EventHandler(this.izlezToolStripMenuItem_Click);
+            this.izlezToolStripMenuItem.Click += new System.EventHandler(this.излезToolStripMenuItem_Click);
             // 
             // lvEntries
             // 
@@ -117,7 +116,7 @@
             this.columnHeader2});
             this.lvEntries.Dock = System.Windows.Forms.DockStyle.Top;
             this.lvEntries.Location = new System.Drawing.Point(5, 19);
-            this.lvEntries.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lvEntries.Margin = new System.Windows.Forms.Padding(2);
             this.lvEntries.MultiSelect = false;
             this.lvEntries.Name = "lvEntries";
             this.lvEntries.Size = new System.Drawing.Size(680, 182);
@@ -140,7 +139,7 @@
             // 
             this.btnDodaj.Image = global::BackupSync.Properties.Resources.Add_24x24;
             this.btnDodaj.Location = new System.Drawing.Point(472, 204);
-            this.btnDodaj.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnDodaj.Margin = new System.Windows.Forms.Padding(2);
             this.btnDodaj.Name = "btnDodaj";
             this.btnDodaj.Size = new System.Drawing.Size(104, 40);
             this.btnDodaj.TabIndex = 2;
@@ -154,7 +153,7 @@
             // 
             this.btnIzbrisi.Image = global::BackupSync.Properties.Resources.Remove_24x24;
             this.btnIzbrisi.Location = new System.Drawing.Point(580, 204);
-            this.btnIzbrisi.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnIzbrisi.Margin = new System.Windows.Forms.Padding(2);
             this.btnIzbrisi.Name = "btnIzbrisi";
             this.btnIzbrisi.Size = new System.Drawing.Size(104, 40);
             this.btnIzbrisi.TabIndex = 4;
@@ -170,7 +169,7 @@
             this.groupBox1.Controls.Add(this.btnDodaj);
             this.groupBox1.Controls.Add(this.btnIzbrisi);
             this.groupBox1.Location = new System.Drawing.Point(9, 28);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.groupBox1.Size = new System.Drawing.Size(690, 250);
@@ -254,9 +253,9 @@
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Location = new System.Drawing.Point(9, 292);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox2.Size = new System.Drawing.Size(690, 202);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
@@ -265,7 +264,7 @@
             // pbStatus
             // 
             this.pbStatus.Location = new System.Drawing.Point(168, 142);
-            this.pbStatus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pbStatus.Margin = new System.Windows.Forms.Padding(2);
             this.pbStatus.Name = "pbStatus";
             this.pbStatus.Size = new System.Drawing.Size(36, 39);
             this.pbStatus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -276,7 +275,7 @@
             // 
             this.groupBox3.Controls.Add(this.lbRecent);
             this.groupBox3.Location = new System.Drawing.Point(379, 18);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.groupBox3.Size = new System.Drawing.Size(306, 170);
@@ -289,7 +288,7 @@
             this.lbRecent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbRecent.FormattingEnabled = true;
             this.lbRecent.Location = new System.Drawing.Point(5, 19);
-            this.lbRecent.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lbRecent.Margin = new System.Windows.Forms.Padding(2);
             this.lbRecent.Name = "lbRecent";
             this.lbRecent.Size = new System.Drawing.Size(296, 145);
             this.lbRecent.TabIndex = 0;
@@ -311,7 +310,7 @@
             // btnToggle
             // 
             this.btnToggle.Location = new System.Drawing.Point(232, 143);
-            this.btnToggle.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnToggle.Margin = new System.Windows.Forms.Padding(2);
             this.btnToggle.Name = "btnToggle";
             this.btnToggle.Size = new System.Drawing.Size(130, 39);
             this.btnToggle.TabIndex = 7;
@@ -324,7 +323,7 @@
             // tbDestFull
             // 
             this.tbDestFull.Location = new System.Drawing.Point(4, 71);
-            this.tbDestFull.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbDestFull.Margin = new System.Windows.Forms.Padding(2);
             this.tbDestFull.Name = "tbDestFull";
             this.tbDestFull.ReadOnly = true;
             this.tbDestFull.Size = new System.Drawing.Size(360, 20);
@@ -333,7 +332,7 @@
             // tbOriginalFull
             // 
             this.tbOriginalFull.Location = new System.Drawing.Point(4, 34);
-            this.tbOriginalFull.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbOriginalFull.Margin = new System.Windows.Forms.Padding(2);
             this.tbOriginalFull.Name = "tbOriginalFull";
             this.tbOriginalFull.ReadOnly = true;
             this.tbOriginalFull.Size = new System.Drawing.Size(360, 20);
@@ -380,7 +379,7 @@
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
             this.Text = "BackupSync";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);

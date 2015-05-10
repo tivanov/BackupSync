@@ -19,6 +19,9 @@ namespace BackupSync
         private int entriesNo;
         List<SyncEntry> syncEntries = new List<SyncEntry>();
 
+        /// <summary>
+        /// Vrsi deserijalizacija na site SyncEntry od fajlot cija pateka e zacuvana vo Properties.Resources.SyncEntries
+        /// </summary>
         private void LoadEntries()
         {
             try
@@ -37,6 +40,9 @@ namespace BackupSync
             }
         }
 
+        /// <summary>
+        /// Vrsi erijalizacija na site SyncEntry vo fajlot cija pateka e zacuvana vo Properties.Resources.SyncEntries
+        /// </summary>
         private void SaveEntries()
         {
             try
@@ -53,6 +59,11 @@ namespace BackupSync
             }
         }
 
+        /// <summary>
+        /// Vrsi dodavanje na nov SyncEtry i dopolnitelno ja povikuva funkcijata SaveItems za da se zacuvaat site.
+        /// Dopolnitelno prikazuva BaloonTip za da go izvesti korisnikot ako se kopiraat podatoci.
+        /// </summary>
+        /// <param name="newEntry"> Noviot SyncEntry koj treba da se dodade.</param>   
         private void AddEntry(SyncEntry newEntry)
         {
             newEntry.StartWatching();
@@ -74,6 +85,9 @@ namespace BackupSync
             LoadEntries();            
         }
 
+        /// <summary>
+        /// Se povikuva pri isklucuvanje na formata. Prikazuva dijalog za potvrda, i ako se odgovori potvrdno aplikacijata se isklucuva
+        /// </summary>
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (MessageBox.Show(Properties.Resources.ExitMsg, "Излез", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
@@ -81,20 +95,19 @@ namespace BackupSync
             else
                 SaveEntries();            
         }
-
+        /// <summary>
+        /// Se povikuva pri dvoen klik na Tray ikonata. Ja prikazuva formata
+        /// </summary>
         private void trayIcon_DoubleClick(object sender, EventArgs e)
         {
             this.Show();
         }
-
+        /// <summary>
+        /// Se povikuva pri klik na 'Postauvanja' od ContextMenu-to. Ja prikazuva formata
+        /// </summary>
         private void postavuvanjaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Show();
-        }
-
-        private void izlezToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -104,15 +117,15 @@ namespace BackupSync
                 lvEntries.Items.Add(se.AsListViewItem());
             btnDodaj.Enabled = entriesNo < MAX_ENTRIES;
         }
-
-        private void trayIcon_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            this.Show();
-        }
-
+        
+        /// <summary>
+        /// Se povikuva koga kje se klikne na kopceto Dodaj. Otvora nova forma vo koja se vnesuvaat potrebnite podatoci 
+        /// za nov SyncEntry. Dopolnitelno go zgolemuva brojot na Entries i go onevozmozuva kopceto Dodaj dokolku se
+        /// dostigne MAX_ENTRIES
+        /// </summary>
         private void btnDodaj_Click(object sender, EventArgs e)
         {            
-            AddEntryForm frm = new AddEntryForm();
+            AddEntryForm frm = new AddEntryForm(this);
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 AddEntry(frm.NewEntry);
@@ -121,6 +134,11 @@ namespace BackupSync
             }
         }
 
+        /// <summary>
+        /// Proveruva dali postoi SyncEntry so daden original i rezervna kopija i vrakja true ili false soodvetno.
+        /// </summary>
+        /// <param name="sourceDir"> pateka na original.</param>   
+        /// <param name="destDir"> pateka na kopija.</param> 
         public bool EntryExists(string sourceDir, string destDir)
         {
             if (syncEntries == null)
@@ -135,7 +153,10 @@ namespace BackupSync
             }
             return false;
         }
-
+        /// <summary>
+        /// Se povikuva koga kje se klikne na kopceto Izbrisi. Go zapira nadgleduvanjeto i go brise entry-to.
+        /// Dopolnitelno go namaluva brojot na Entries i go ovozmozuva kopceto Dodaj dokolku e pomal od MAX_ENRIES
+        /// </summary>
         private void btnIzbrisi_Click(object sender, EventArgs e)
         {
             if (lvEntries.SelectedItems.Count > 0)
@@ -234,7 +255,7 @@ namespace BackupSync
         /// </summary>
         private void Form1_Resize(object sender, EventArgs e)
         {
-            //detektiraj dali e minimizirana i ako e podesi ja ikonata vo Tray
+            //detektiraj dali e minimizirana i ako e podesi ja ikonata vo Tray i sokrij ja formata
             if (FormWindowState.Minimized == this.WindowState)
             {
                 trayIcon.Visible = true;
@@ -323,31 +344,36 @@ namespace BackupSync
                 {//vo sprotivno so bela
                     lvEntries.Items[i].BackColor = Color.White;
                 }
+                //ako ima datoteki koi se kopiraat postavi flag
                 if (syncEntries[i].IsCopying)
                     IsCopyingFiles = true;
             }
             if (ErrorBaloonTimer.Enabled != damagedFiles)
-            {
+            {//Vkluci go ili iskluci go tajmerot za osteteni fajlovi
                 ErrorBaloonTimer.Enabled = damagedFiles;
                 if (damagedFiles)
                     ErrorBaloonTimer_Tick(null, null);
             }
+            //eden reload na informaciite za da se zabelezat promeni dokolku ima
             if (lvEntries.SelectedItems.Count > 0)
                 lvEntries_SelectedIndexChanged(null, null);
 
             if (IsCopyingFiles && trayIcon.Visible)
-            {
+            {//Ako e vidliva Tray ikonata i se kopiraat fajlovi smeni ja ikonata i tekstot
                 trayIcon.Icon = Properties.Resources.Sync;
                 trayIcon.Text = "BackupSunc: Во тек е копирање на датотеки.";
             }
             else
-            {
+            {//Inaku vrati ja na default
                 trayIcon.Icon = Properties.Resources.Download;
                 trayIcon.Text = "BackupSunc";
             }
             
         }
-
+        /// <summary>
+        /// se povikuva na sekoi 10 minuti ako ima osteteni fajlovi/direktoriumi i prikazuva BaloonTip
+        /// za da se informira korisnikot.
+        /// </summary>
         private void ErrorBaloonTimer_Tick(object sender, EventArgs e)
         {
             if (damagedFiles)
