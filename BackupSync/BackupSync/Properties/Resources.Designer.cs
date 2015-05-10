@@ -130,6 +130,16 @@ namespace BackupSync.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon Download {
+            get {
+                object obj = ResourceManager.GetObject("Download", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Дали сте сигурни дека сакате да ја исклучите апликацијата?
         ///Доколку ја исклучите, вашите датотеки нема да бидат синхронизирани..
         /// </summary>
@@ -186,6 +196,16 @@ namespace BackupSync.Properties {
         internal static string SaveErrorMsg {
             get {
                 return ResourceManager.GetString("SaveErrorMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon Sync {
+            get {
+                object obj = ResourceManager.GetObject("Sync", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         

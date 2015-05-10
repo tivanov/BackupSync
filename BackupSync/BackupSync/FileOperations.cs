@@ -15,7 +15,7 @@ namespace BackupSync
             {                
                 if (System.IO.Directory.Exists(source))
                 {// ako e kreiran folder
-                    Directory.CreateDirectory(dest);
+                    DirectoryCopy(source, dest, true);
                 }
                 else
                 {//ako e kreiran fajl

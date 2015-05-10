@@ -69,7 +69,7 @@ namespace BackupSync
             if (tbDestPath.Text != null && !tbDestPath.Text.Equals("") &&
                 tbSourcePath.Text != null && !tbSourcePath.Text.Equals("") 
                 && !tbSourcePath.Text.Equals(tbDestPath.Text, StringComparison.OrdinalIgnoreCase) &&
-                tbDestPath.Text.IndexOf(tbSourcePath.Text, StringComparison.OrdinalIgnoreCase)<0)
+                tbDestPath.Text.Substring(0, tbDestPath.Text.LastIndexOf("\\")).IndexOf(tbSourcePath.Text, StringComparison.OrdinalIgnoreCase)<0)
                 btnOk.Enabled = true;
             else btnOk.Enabled = false;
         }

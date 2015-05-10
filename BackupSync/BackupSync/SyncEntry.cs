@@ -13,6 +13,7 @@ namespace BackupSync
     [Serializable]
     public class SyncEntry
     {
+        private bool    firstCopyDone;
         public  bool    IsCopying;
         public  bool    SourceDamaged;
         public  bool    DestDamaged;
@@ -37,16 +38,34 @@ namespace BackupSync
             this.recentSync = new Queue<string>(10);
             this.sourceDir = sourceDir;
             this.destDir = destDir;
-            this.IsWatched = false;
             SetupWatcher();
-            if (startWatching && !DirsDamaged())
-                StartNotifying();
+            firstCopyDone = true;
             if (shouldCopy)
             {
-                IsCopying = true;
-                FileOperations.DirectoryCopy(sourceDir, destDir, true);
-                IsCopying = false;
+                firstCopyDone = false;
+                worker = new BackgroundWorker();
+                worker.DoWork += new DoWorkEventHandler(worker_DoWork);
+                worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
+                worker.RunWorkerAsync();
             }
+            else if (startWatching && !DirsDamaged())
+                StartNotifying();
+                
+        }
+
+        private void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            IsCopying = true;
+            FileOperations.DirectoryCopy(sourceDir, destDir, true);
+            
+        }
+
+        private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            IsCopying = false;
+            firstCopyDone = true;
+            if (!DirsDamaged())
+                StartNotifying();
         }
           
         internal void SetupWatcher()
@@ -89,7 +108,7 @@ namespace BackupSync
 
         public void StartNotifying()
         {
-                if (!DirsDamaged())
+                if (!DirsDamaged() && firstCopyDone)
                 {//ovozmozuvanje na watcherot
                     if (watcher == null)
                         SetupWatcher();

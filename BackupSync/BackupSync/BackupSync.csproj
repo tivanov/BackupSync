@@ -106,16 +106,10 @@
     <None Include="Resources\Syncing.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Visualpharm-Must-Have-Synchronize.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Visualpharm-Must-Have-Remove.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Cheezen-Web-2-Check.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Visualpharm-Must-Have-Download.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Open_48x48.png" />
@@ -149,6 +143,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Refresh_48x48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Visualpharm-Must-Have-Synchronize.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Visualpharm-Must-Have-Download.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

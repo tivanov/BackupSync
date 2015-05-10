@@ -59,6 +59,13 @@ namespace BackupSync
             syncEntries.Add(newEntry);
             SaveEntries();
             lvEntries.Items.Add(newEntry.AsListViewItem());
+            if (newEntry.IsCopying)
+            {
+                trayIcon.BalloonTipIcon = ToolTipIcon.Info;
+                trayIcon.BalloonTipTitle = "BackupSync";
+                trayIcon.BalloonTipText = "Податоците од последно додадениот директориум се синхронизираат.";
+                trayIcon.ShowBalloonTip(4000);
+            }
         }
 
         public Form1()
@@ -150,6 +157,7 @@ namespace BackupSync
                 SyncEntry selectedEntry = syncEntries.ElementAt(lvEntries.SelectedIndices[0]);
                 tbDestFull.Text = selectedEntry.DestDirFullPath;
                 tbOriginalFull.Text = selectedEntry.SourceDirFullPath;
+                btnToggle.Visible = true;
 
                 if (selectedEntry.IsWatched)
                 {
@@ -157,7 +165,7 @@ namespace BackupSync
                     btnToggle.Image = BackupSync.Properties.Resources.Delete_24x24;
                     lblStatus.Text = "Се надгледува";
                     lblStatus.BackColor = Color.Green;
-                    btnToggle.Visible = true;
+                    
                     if (selectedEntry.IsCopying)
                     {
                         pbStatus.Image = Properties.Resources.Refresh_48x48;
@@ -183,14 +191,20 @@ namespace BackupSync
                     btnToggle.Image = BackupSync.Properties.Resources.Check_24x24;
                     lblStatus.Text = "Не се надгледува";
                     lblStatus.BackColor = Color.Orange;
-                    btnToggle.Visible = true;
-                    pbStatus.Image = null;
+                    if (selectedEntry.IsCopying)
+                    {
+                        pbStatus.Image = Properties.Resources.Refresh_48x48;
+                        ttImage.SetToolTip(pbStatus, "Директориумите се синхронизираат.");
+                    }
+                    else
+                    {
+                        pbStatus.Image = null;
+                        ttImage.RemoveAll();
+                    }
+                    
                 }
-
                 lbRecent.Items.Clear();
-                lbRecent.Items.AddRange(selectedEntry.recentSync.ToArray());
-                
-                
+                lbRecent.Items.AddRange(selectedEntry.recentSync.ToArray()); 
             }
             else
             {
@@ -200,6 +214,7 @@ namespace BackupSync
                 lblStatus.BackColor = Color.WhiteSmoke;
                 lbRecent.Items.Clear();
                 pbStatus.Image = null;
+                ttImage.RemoveAll();
             }
         }
 
@@ -267,6 +282,7 @@ namespace BackupSync
         private void checkerTimer_Tick(object sender, EventArgs e)
         {
             damagedFiles = false;
+            bool IsCopyingFiles = false;
             for (int i = 0; i<syncEntries.Count; i++)
             {
                 if (lvEntries.Items[i].BackColor.Equals(Color.Red))
@@ -278,6 +294,8 @@ namespace BackupSync
                     lvEntries.Items[i].BackColor = Color.Red;
                     damagedFiles = true;                    
                 }
+                if (syncEntries[i].IsCopying)
+                    IsCopyingFiles = true;
 
             }
             if (ErrorBaloonTimer.Enabled != damagedFiles)
@@ -288,6 +306,17 @@ namespace BackupSync
             }
             if (lvEntries.SelectedItems.Count > 0)
                 lvEntries_SelectedIndexChanged(null, null);
+
+            if (IsCopyingFiles && trayIcon.Visible)
+            {
+                trayIcon.Icon = Properties.Resources.Sync;
+                trayIcon.Text = "BackupSunc: Во тек е копирање на датотеки.";
+            }
+            else
+            {
+                trayIcon.Icon = Properties.Resources.Download;
+                trayIcon.Text = "BackupSunc";
+            }
             
         }
 
