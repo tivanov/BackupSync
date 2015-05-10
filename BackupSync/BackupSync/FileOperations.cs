@@ -9,10 +9,13 @@ namespace BackupSync
 {
     class FileOperations
     {
+        /// <summary>
+        /// Kopira datoteka ili direktorium. Pritoa dokolku postoi takva datoteka/direktorium vo destinacijata se prezapisuvaat.
+        /// </summary>
+        /// <param name="source"> pateka na original.</param>   
+        /// <param name="dest"> pateka na kopija.</param> 
         public static void Copy(string source, string dest)
-        {
-            try
-            {                
+        {     
                 if (System.IO.Directory.Exists(source))
                 {// ako e kreiran folder
                     DirectoryCopy(source, dest, true);
@@ -21,47 +24,36 @@ namespace BackupSync
                 {//ako e kreiran fajl
                     File.Copy(source, dest, true);
                 }
-
-            }
-            catch (Exception ioe)
-            {
-                //EventLog.WriteEntry("FileSync Copy File failed: " + ioe.Message);
-            }
         }
+
+        /// <summary>
+        /// Premestuva datoteka ili direktorium. Pritoa dokolku postoi takva datoteka/direktorium vo destinacijata se prezapisuvaat.
+        /// </summary>
+        /// <param name="source"> pateka na original.</param>   
+        /// <param name="dest"> pateka na kopija.</param> 
         public static void Move(string source, string dest)
         {
-            try
-            {
                 if (System.IO.Directory.Exists(source))
-                {
                     Directory.Move(source, dest);
-                }
                 else
-                {
                     File.Move(source, dest);
-                }
-            }
-            catch (Exception ioe)
-            {
-                //EventLog.WriteEntry("FileSync Rename File failed: " + ioe.Message);
-            }
         }
 
         public static void Delete(string target)
         {
-            try
-            {
                 if (System.IO.Directory.Exists(target))
                     Directory.Delete(target, true);
                 else
                     File.Delete(target);
-            }
-            catch (Exception ioe)
-            {
-                //EventLog.WriteEntry("FileSync Delete File failed: " + ioe.Message);
-            }
         }
 
+        /// <summary>
+        /// Kopira direktorium. Pritoa dokolku postoi takov direktorium vo destinacijata se prezapisuva.
+        /// Prevzemena od MSDN.
+        /// </summary>
+        /// <param name="sourceDirName"> pateka na original.</param>   
+        /// <param name="destDirName"> pateka na kopija.</param> 
+        /// <param name="copySubDirs"> oznacuva dali da se povikuva funkcijata za site poddirektoriumi.</param> 
         public static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
         {
             // Get the subdirectories for the specified directory.
